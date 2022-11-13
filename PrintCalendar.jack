@@ -1,0 +1,150 @@
+class PrintCalendar {
+    constructor PrintCalendar new(int m, int y) {
+        var int newLine, month, year, i, j, k;
+        let newLine = 0;
+        let month  = m;
+        let year = y;
+        do printMonthName(month, year);
+        do printTemplate();
+        let i = getDayofWeek(month, year);
+        while (~(i = 0)) {
+            do Output.printString("     ");
+            let newLine = newLine + 1;
+            let i = i - 1;
+        }
+        let j = 1;
+        let k = getNumberOfDays(m, y) + 1;
+        while (j < k) {
+            do numOffset(j);
+            do Output.printInt(j);
+            let newLine = newLine + 1;
+            if (newLine = 7) {
+                do Output.println();
+                let newLine = 0;
+            }
+            if (~(newLine = 7) & ~(newLine = 0)) {
+                do Output.printString("  ");
+            }
+            let j = j + 1;
+        }
+        return this;
+    }
+    method void printTemplate() {
+        do Output.printString("Sun  Mon  Tue  Wed  Thu  Fri  Sat");
+        do Output.println();
+        do Output.printString("---------------------------------");
+        do Output.println();
+        return;
+    }
+    method void numOffset(int n) {
+        if (n < 10) {
+            do Output.printString("  ");
+        }
+        if (n > 9) {
+            do Output.printString(" ");
+        }
+        return;
+    }
+    method void printMonthName(int m, int y) {
+        if (m = 1) {
+            do Output.printString("January ");
+        }
+        if (m = 2) {
+            do Output.printString("Febuary ");
+        }
+        if (m = 3) {
+            do Output.printString("March ");
+        }
+        if (m = 4) {
+            do Output.printString("April ");
+        }
+        if (m = 5) {
+            do Output.printString("May ");
+        }
+        if (m = 6) {
+            do Output.printString("June ");
+        }
+        if (m = 7) {
+            do Output.printString("July ");
+        }
+        if (m = 8) {
+            do Output.printString("August ");
+        }
+        if (m = 9) {
+            do Output.printString("September ");
+        }
+        if (m = 10) {
+            do Output.printString("October ");
+        }
+        if (m = 11) {
+            do Output.printString("November ");
+        }
+        if (m = 12) {
+            do Output.printString("December ");
+        }
+        do Output.printInt(y);
+        do Output.println();
+        return;
+    }
+
+    method int getDayofWeek(int m, int y) {
+        var int a, b, c, d;
+        let a = (14 - m)/12;
+        let b = y - a;
+        let m = m + (12*a) - 2;
+        let d = (1 + y + (y/4) - (y/100) + (y/400) + ((31*m)/12));
+        return getRemainder(d, 7);
+    }
+
+    method int getRemainder(int n, int numDay) {
+        var int a;
+        let a = n/numDay;
+        let a = a*numDay;
+        return (n-a);
+    }
+
+    method int getNumberOfDays(int m, int y) {
+        var int num;
+        var boolean leap;
+        let num = 31;
+        if (m = 4) {
+            let num = 30;
+        }
+        if (m = 6) {
+            let num = 30;
+        }
+        if (m = 9) {
+            let num = 30;
+        }
+        if (m = 11) {
+            let num = 30;
+        }
+        if (m = 2) {
+            let leap = isLeapYear(y);
+            if (leap) {
+                let num = 29;
+            }
+            if (~leap) {
+                let num = 28;
+            }
+        }
+        return num;
+    }
+    method boolean isLeapYear(int y) {
+        var boolean leap;
+        let leap = false;
+        if (getRemainder(y, 4) = 0) {
+            if (~(getRemainder(y, 100) = 0)) {
+                let leap = true;
+            }
+            if (getRemainder(y, 400) = 0) {
+                let leap = true;
+            }
+        }
+        return leap;
+    }
+    method void dispose() {
+      do Memory.deAlloc(this);
+      return;
+    }
+}

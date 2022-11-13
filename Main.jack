@@ -1,0 +1,11 @@
+// Print calendar given year
+class Main {
+    function void main() {
+        var int enteredYear, enteredMonth;
+        var PrintCalendar calendar;
+        let enteredYear = Keyboard.readInt("Please Enter Calendar Year: ");
+        let enteredMonth = Keyboard.readInt("Please Enter Calendar Month: ");
+        let calendar = PrintCalendar.new(enteredMonth, enteredYear);
+        return;
+    }
+}
